@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>Spring Boot项目中使用JSP</title>
+      <link href="//posts/20190305--Spring%20Boot%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8JSP/"/>
+      <url>//posts/20190305--Spring%20Boot%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8JSP/</url>
+      
+        <content type="html"><![CDATA[<p>Spring Boot 的默认视图支持是 Thymeleaf 模板引擎,但是想使用我们熟悉的JSP怎么办?</p><h2 id="一-如何配置JSP"><a href="#一-如何配置JSP" class="headerlink" title="一.如何配置JSP"></a>一.如何配置JSP</h2><h3 id="1-pom-xml中增加对-JSP-文件的支持"><a href="#1-pom-xml中增加对-JSP-文件的支持" class="headerlink" title="1. pom.xml中增加对 JSP 文件的支持"></a>1. pom.xml中增加对 JSP 文件的支持</h3><p>servlet依赖</p><pre><code>&lt;dependency&gt;        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;        &lt;artifactId&gt;jstl&lt;/artifactId&gt;    &lt;/dependency&gt;</code></pre><p>tomcat支持</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;    &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;    &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;</code></pre><h3 id="2-application-yml中配置jsp路径"><a href="#2-application-yml中配置jsp路径" class="headerlink" title="2. application.yml中配置jsp路径"></a>2. application.yml中配置jsp路径</h3><pre><code>spring:  mvc:    view:      prefix: /WEB-INF/jsp/        # 页面默认前缀目录      suffix: .jsp                 # 响应页面默认后缀</code></pre><h3 id="3-jsp页面热部署配置"><a href="#3-jsp页面热部署配置" class="headerlink" title="3. jsp页面热部署配置"></a>3. jsp页面热部署配置</h3><pre><code>server:  port: 8080        #端口号  servlet:    jsp:      init-parameters:        development: true</code></pre><h2 id="二-使用JSP做视图有哪些问题"><a href="#二-使用JSP做视图有哪些问题" class="headerlink" title="二.使用JSP做视图有哪些问题"></a>二.使用JSP做视图有哪些问题</h2><h3 id="1-项目部署问题"><a href="#1-项目部署问题" class="headerlink" title="1. 项目部署问题"></a>1. 项目部署问题</h3><p>使用外部Tomcat部署,没有问题<br>若使用Spring boot内置的Tomcat需要将项目打成war包<br>(如果打jar包,WEB-INF下的jsp页面打不进去,无法访问.<br>Linux下项目启动命令:nohup java -jar demo-0.0.1-SNAPSHOT.war &gt; system.log 2&gt;&amp;1 &amp;)</p><pre><code>&lt;packaging&gt;war&lt;/packaging&gt;</code></pre><h3 id="2-JAR包冲突问题"><a href="#2-JAR包冲突问题" class="headerlink" title="2. JAR包冲突问题"></a>2. JAR包冲突问题</h3><p>当使用了阿里云以下依赖,启动项目时报错 \jaxb-impl\2.3.0\jaxb-api.jar (系统找不到指定的文件)等类似问题,但不影响使用</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.aliyun&lt;/groupId&gt;    &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;    &lt;version&gt;4.0.6&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>解决方式:<br>(第一种)<br>① pom.xml中添加依赖</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.sun.xml.bind&lt;/groupId&gt;    &lt;artifactId&gt;jaxb-impl&lt;/artifactId&gt;    &lt;version&gt;2.3.0&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>② 手动添加jar包到maven仓库<br>&emsp;&emsp;jaxb-api.jar<br>&emsp;&emsp;jaxb-core.jar<br>&emsp;&emsp;jaxb-impl-2.3.0.jar</p><p>[推荐] (第二种)<br>解决冲突,修改pom.xml中aliyun的依赖</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.aliyun&lt;/groupId&gt;    &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;    &lt;version&gt;4.0.6&lt;/version&gt;    &lt;exclusions&gt;        &lt;exclusion&gt;            &lt;artifactId&gt;jaxb-api&lt;/artifactId&gt;            &lt;groupId&gt;javax.xml.bind&lt;/groupId&gt;        &lt;/exclusion&gt;        &lt;exclusion&gt;            &lt;artifactId&gt;jaxb-impl&lt;/artifactId&gt;            &lt;groupId&gt;com.sun.xml.bind&lt;/groupId&gt;        &lt;/exclusion&gt;    &lt;/exclusions&gt;&lt;/dependency&gt;</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Spring Boot </tag>
+            
+            <tag> JSP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>关于mybatis中collection一对多嵌套查询分页出错问题总结</title>
       <link href="//posts/20190304--%E5%85%B3%E4%BA%8Emybatis%E4%B8%ADcollection%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2%E5%88%86%E9%A1%B5%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
       <url>//posts/20190304--%E5%85%B3%E4%BA%8Emybatis%E4%B8%ADcollection%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2%E5%88%86%E9%A1%B5%E5%87%BA%E9%94%99%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</url>
