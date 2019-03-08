@@ -4,11 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring Boot项目中使用JSP, linhai">
-    <meta name="description" content="Spring Boot 的默认视图支持是 Thymeleaf 模板引擎,但是想使用我们熟悉的JSP怎么办?
-一.如何配置JSP1. pom.xml中增加对 JSP 文件的支持servlet依赖
-&amp;lt;dependency&amp;gt;
-    ">
+    <meta name="keywords" content="JavaScript中的for..in循环, linhai">
+    <meta name="description" content="在JS中使用循环,常用两种方式
+
+for(var i=0;i&amp;lt;obj.length;i++){…}
+for (var i in obj) {…}
+
+问题复现在一次使用for..in循环对象时,发现循环次数大于对象的size,从而影响了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Spring Boot项目中使用JSP | 迷失の信徒</title>
+    <title>JavaScript中的for..in循环 | 迷失の信徒</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -206,13 +208,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Spring Boot项目中使用JSP
+                        JavaScript中的for..in循环
                     </div>
                 </div>
             </div>
@@ -304,12 +306,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Spring-Boot/" target="_blank">
-                                <span class="chip bg-color">Spring Boot</span>
-                            </a>
-                        
-                            <a href="/tags/JSP/" target="_blank">
-                                <span class="chip bg-color">JSP</span>
+                            <a href="/tags/JavaScript/" target="_blank">
+                                <span class="chip bg-color">JavaScript</span>
                             </a>
                         
                     </div>
@@ -330,7 +328,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        518
+                        620
                     </div>
                     
 
@@ -353,61 +351,52 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Spring Boot 的默认视图支持是 Thymeleaf 模板引擎,但是想使用我们熟悉的JSP怎么办?</p>
-<h2 id="一-如何配置JSP"><a href="#一-如何配置JSP" class="headerlink" title="一.如何配置JSP"></a>一.如何配置JSP</h2><h3 id="1-pom-xml中增加对-JSP-文件的支持"><a href="#1-pom-xml中增加对-JSP-文件的支持" class="headerlink" title="1. pom.xml中增加对 JSP 文件的支持"></a>1. pom.xml中增加对 JSP 文件的支持</h3><p>servlet依赖</p>
-<pre><code>&lt;dependency&gt;
-        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
-        &lt;artifactId&gt;jstl&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-</code></pre><p>tomcat支持</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;
-    &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;
-</code></pre><h3 id="2-application-yml中配置jsp路径"><a href="#2-application-yml中配置jsp路径" class="headerlink" title="2. application.yml中配置jsp路径"></a>2. application.yml中配置jsp路径</h3><pre><code>spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/        # 页面默认前缀目录
-      suffix: .jsp                 # 响应页面默认后缀
-</code></pre><h3 id="3-jsp页面热部署配置"><a href="#3-jsp页面热部署配置" class="headerlink" title="3. jsp页面热部署配置"></a>3. jsp页面热部署配置</h3><pre><code>server:
-  port: 8080        #端口号
-  servlet:
-    jsp:
-      init-parameters:
-        development: true
-</code></pre><h2 id="二-使用JSP做视图有哪些问题"><a href="#二-使用JSP做视图有哪些问题" class="headerlink" title="二.使用JSP做视图有哪些问题"></a>二.使用JSP做视图有哪些问题</h2><h3 id="1-项目部署问题"><a href="#1-项目部署问题" class="headerlink" title="1. 项目部署问题"></a>1. 项目部署问题</h3><p>使用外部Tomcat部署,没有问题<br>若使用Spring boot内置的Tomcat需要将项目打成war包<br>(如果打jar包,WEB-INF下的jsp页面打不进去,无法访问.<br>Linux下项目启动命令:nohup java -jar demo-0.0.1-SNAPSHOT.war &gt; system.log 2&gt;&amp;1 &amp;)</p>
-<pre><code>&lt;packaging&gt;war&lt;/packaging&gt;
-</code></pre><h3 id="2-JAR包冲突问题"><a href="#2-JAR包冲突问题" class="headerlink" title="2. JAR包冲突问题"></a>2. JAR包冲突问题</h3><p>当使用了阿里云以下依赖,启动项目时报错 \jaxb-impl\2.3.0\jaxb-api.jar (系统找不到指定的文件)等类似问题,但不影响使用</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
-    &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;
-    &lt;version&gt;4.0.6&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre><p>解决方式:<br>(第一种)<br>① pom.xml中添加依赖</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.sun.xml.bind&lt;/groupId&gt;
-    &lt;artifactId&gt;jaxb-impl&lt;/artifactId&gt;
-    &lt;version&gt;2.3.0&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre><p>② 手动添加jar包到maven仓库<br>&emsp;&emsp;jaxb-api.jar<br>&emsp;&emsp;jaxb-core.jar<br>&emsp;&emsp;jaxb-impl-2.3.0.jar</p>
-<p>[推荐] (第二种)<br>解决冲突,修改pom.xml中aliyun的依赖</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;com.aliyun&lt;/groupId&gt;
-    &lt;artifactId&gt;aliyun-java-sdk-core&lt;/artifactId&gt;
-    &lt;version&gt;4.0.6&lt;/version&gt;
-    &lt;exclusions&gt;
-        &lt;exclusion&gt;
-            &lt;artifactId&gt;jaxb-api&lt;/artifactId&gt;
-            &lt;groupId&gt;javax.xml.bind&lt;/groupId&gt;
-        &lt;/exclusion&gt;
-        &lt;exclusion&gt;
-            &lt;artifactId&gt;jaxb-impl&lt;/artifactId&gt;
-            &lt;groupId&gt;com.sun.xml.bind&lt;/groupId&gt;
-        &lt;/exclusion&gt;
-    &lt;/exclusions&gt;
-&lt;/dependency&gt;
-</code></pre>
+                <p>在JS中使用循环,常用两种方式</p>
+<ol>
+<li>for(var i=0;i&lt;obj.length;i++){…}</li>
+<li>for (var i in obj) {…}</li>
+</ol>
+<h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>在一次使用for..in循环对象时,发现循环次数大于对象的size,从而影响了最终的结果.</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function () {
+        var conferenceSeatUserList = &apos;${conferenceSeatUserList}&apos;;
+        var seatUser = eval(&apos;(&apos; + conferenceSeatUserList + &apos;)&apos;);
+        for(var i in seatUser){
+            var ordinate = seatUser[i].ordinate;
+            var abscissa = seatUser[i].abscissa;
+            var attendeeName = seatUser[i].attendeeName;
+            var obj = $(&quot;#tableId&quot;)[0].rows[ordinate - 1].cells[abscissa - 1];
+            if(seatUser[i].coferenceId!=null){
+                obj.innerHTML  = seatUser[i].attendeeName+ &apos;&lt;br/&gt;&lt;div class=&quot;layui-inline&quot;&gt;&lt;button id=&quot;updateBtn&quot; class=&quot;layui-btn layui-btn-primary layui-btn-pr-master&quot; type=&quot;button&quot; onclick=&quot;selectAttendeeMan(&apos;+seatUser[i].id+&apos;)&quot;&gt;更改&lt;/button&gt;&apos;;
+            }
+            if(seatUser[i].coferenceId==null &amp;&amp; seatUser[i].status==2){
+                obj.innerHTML  =  &apos;&lt;div class=&quot;layui-inline&quot;&gt;&apos;+ &apos;&lt;button id=&quot;updateBtn&quot; class=&quot;layui-btn layui-btn-primary layui-btn-pr-master&quot; type=&quot;button&quot; onclick=&quot;selectAttendeeMan(&apos;+seatUser[i].id+&apos;)&quot;&gt;选人&lt;/button&gt;&apos;;
+            }
+            //启用或禁用座位
+            if(seatUser[i].status==2){
+                obj.innerHTML  += &apos;&lt;button id=&quot;updateBtn&quot; class=&quot;layui-btn layui-btn-primary layui-btn-pr-master&quot; type=&quot;button&quot; onclick=&quot;updateSeatStatus(&apos;+seatUser[i].id+&apos;,3)&quot;&gt;禁用&lt;/button&gt;&apos;;
+            }
+            if(seatUser[i].status==3 &amp;&amp; seatUser[i].coferenceId==null){
+                obj.innerHTML  += &apos;&lt;button id=&quot;updateBtn&quot; class=&quot;layui-btn layui-btn-primary layui-btn-pr-master&quot; type=&quot;button&quot; onclick=&quot;updateSeatStatus(&apos;+seatUser[i].id+&apos;,2)&quot;&gt;启用&lt;/button&gt;&apos;;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>查看相关内容发现,for..in循环in判断的是对象的所有属性，包括对象实例及其原型的属性(即会把某个类型的原型(prototype)中方法与属性给遍历出来)，所以这可能会导致代码中出现意外的错误.</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>为了避免这个问题，我们可以使用对象的hasOwnProperty()方法来避免这个问题.<br>hasOwnProperty判断一个对象是否有名称的属性或对象，此方法无法检查该对象的原型链中是否具有该属性，该属性必须是对象本身的一个成员。<br>如果该属性或者方法是该 对象自身定义的而不是器原型链中定义的 则返回true;否则返回false; </li>
+</ol>
+<pre><code>//如果不是该对象自身直接创建的属性（也就是该属性是原型中的属性），则跳过显示
+for(var i in seatUser){
+    if(!seatUser.hasOwnProperty(i)){
+     continue;
+    }
+    ...
+} 
+</code></pre><ol start="2">
+<li>直接使用for(var i=0;i&lt;obj.length;i++){…},放弃使用for..in循环.</li>
+</ol>
+
             </div>
             <hr>
 
@@ -554,7 +543,7 @@
                     </span>
                     <a href="http://linhai-bai.github.io" class="b-link-green">迷失の信徒</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/posts/20190305--Spring Boot项目中使用JSP/" class="b-link-green">Spring Boot项目中使用JSP</a>
+                    <a href="/posts/20190305--JavaScript中的for-in循环/" class="b-link-green">JavaScript中的for..in循环</a>
                 </p>
             </div>
         </div>
@@ -577,7 +566,8 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/posts/20190305--JavaScript中的for-in循环/">
                     <div class="card-image">
@@ -596,9 +586,9 @@ for (var i in obj) {…}
 
 问题复现在一次使用for..in循环对象时,发现循环次数大于对象的size,从而影响了</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -607,6 +597,7 @@ for (var i in obj) {…}
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -625,21 +616,23 @@ for (var i in obj) {…}
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/20190304--关于mybatis中collection嵌套查询问题总结/">
+                <a href="/posts/20190305--Spring Boot项目中使用JSP/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="关于mybatis中collection嵌套查询问题总结">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Spring Boot项目中使用JSP">
                         
-                        <span class="card-title">关于mybatis中collection嵌套查询问题总结</span>
+                        <span class="card-title">Spring Boot项目中使用JSP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">问题描述mybatis分页查询,使用了collection进行一对多关联时,出现分页不正确的问题分页的每页记录数pageSize=5,如图查询结果首页只有4条订单数据.
-分析原因在订单查询中,涉及订单和订单流水两张表,一个订单对应一个或多个</div>
+                    <div class="summary">Spring Boot 的默认视图支持是 Thymeleaf 模板引擎,但是想使用我们熟悉的JSP怎么办?
+一.如何配置JSP1. pom.xml中增加对 JSP 文件的支持servlet依赖
+&lt;dependency&gt;
+    </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-04
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-05
                             </span>
                         <span class="publish-author">
                             
@@ -652,12 +645,12 @@ for (var i in obj) {…}
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/" target="_blank">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/Spring-Boot/" target="_blank">
+                        <span class="chip bg-color">Spring Boot</span>
                     </a>
                     
-                    <a href="/tags/Mybatis/" target="_blank">
-                        <span class="chip bg-color">Mybatis</span>
+                    <a href="/tags/JSP/" target="_blank">
+                        <span class="chip bg-color">JSP</span>
                     </a>
                     
                 </div>
