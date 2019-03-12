@@ -5,8 +5,8 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="MySQL 6以后的驱动更新及时区问题, linhai">
-    <meta name="description" content="驱动更新mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”
-时区设定使用新版驱动”com.mysql.cj">
+    <meta name="description" content="驱动更新mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”,否则版本不匹配便会报错
+时区设定使用新版驱动”">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -324,7 +324,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        94
+                        105
                     </div>
                     
 
@@ -347,7 +347,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="驱动更新"><a href="#驱动更新" class="headerlink" title="驱动更新"></a>驱动更新</h3><p>mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”<br>mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”</p>
+                <h3 id="驱动更新"><a href="#驱动更新" class="headerlink" title="驱动更新"></a>驱动更新</h3><p>mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”<br>mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”,否则版本不匹配便会报错</p>
 <h3 id="时区设定"><a href="#时区设定" class="headerlink" title="时区设定"></a>时区设定</h3><p>使用新版驱动”com.mysql.cj.jdbc.Driver”,需要指定时区serverTimezone<br>(GMT%2B8、HongkongAsia/Shanghai或者Asia/Hongkong)</p>
 <pre><code>url: jdbc:mysql://localhost:3306/base?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;serverTimezone=GMT%2B8
 </code></pre>
@@ -533,8 +533,8 @@
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">驱动更新mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”
-时区设定使用新版驱动”com.mysql.cj</div>
+                    <div class="summary">驱动更新mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”,否则版本不匹配便会报错
+时区设定使用新版驱动”</div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-12
