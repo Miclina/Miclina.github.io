@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>PDF添加图片印章-JAVA</title>
+      <link href="//posts/20190317--PDF%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87%E5%8D%B0%E7%AB%A0-JAVA/"/>
+      <url>//posts/20190317--PDF%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87%E5%8D%B0%E7%AB%A0-JAVA/</url>
+      
+        <content type="html"><![CDATA[<p>使用<a href="https://www.e-iceblue.cn/Downloads/Free-Spire-PDF-JAVA.html" target="_blank" rel="noopener">Free Spire.PDF for Java</a> 产品,为PDF添加印章<br>① 下载JAR包或使用Maven仓库<br>② Java代码示例</p><pre><code>//创建PdfDocument对象，加载PDF文档PdfDocument doc = new PdfDocument();doc.loadFromStream(new ByteArrayInputStream(buffer.toByteArray()));//获取文档最后一页PdfPageBase page = doc.getPages().get(doc.getPages().getCount()-1);//加载印章图片PdfImage image = PdfImage.fromStream(new URL(Const.oSSFilePath+productAgreement.getContractSeal()).openStream());//获取印章图片的宽度和高度int width = image.getWidth();int height = image.getHeight();//创建PdfTemplate对象PdfTemplate template = new PdfTemplate(width, height);//将图片绘制到模板template.getGraphics().drawImage(image, 0, 0, width, height);//创建PdfRubebrStampAnnotation对象，指定大小和位置Rectangle2D rect = new Rectangle2D.Float((float) (page.getActualSize().getWidth() - productAgreement.getAbscissa()), (float) (page.getActualSize().getHeight() - productAgreement.getOrdinate()),productAgreement.getSealWidth(),productAgreement.getSealHeight() );PdfRubberStampAnnotation stamp = new PdfRubberStampAnnotation(rect);//创建PdfAppearance对象PdfAppearance pdfAppearance = new PdfAppearance(stamp);//将模板应用为PdfAppearance的一般状态pdfAppearance.setNormal(template);//将PdfAppearance 应用为图章的样式stamp.setAppearance(pdfAppearance);//添加图章到PDFpage.getAnnotationsWidget().add(stamp);String filePath = &quot;pdf/预览协议.pdf&quot;;//保存文档doc.saveToFile(filePath,FileFormat.PDF);//上传阿里云AliOSSClientController aliOssClientCont = new AliOSSClientController();OSSClient ossClient = aliOssClientCont.getOSSClient();ossClient.putObject(Const.bucketName, filePath, new FileInputStream(filePath));ossClient.shutdown();注:自定义数据    印章图片地址:productAgreement.getContractSeal()    印章宽度:productAgreement.getSealWidth()    印章长度:productAgreement.getSealWidth()    印章位置横坐标:productAgreement.getSealWidth()    印章位置纵坐标:productAgreement.getSealWidth()</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Free Spire.PDF for Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL 6以后的驱动更新及时区问题</title>
       <link href="//posts/20190312--MySQL-6%E4%BB%A5%E5%90%8E%E7%9A%84%E9%A9%B1%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%8F%8A%E6%97%B6%E5%8C%BA%E9%97%AE%E9%A2%98/"/>
       <url>//posts/20190312--MySQL-6%E4%BB%A5%E5%90%8E%E7%9A%84%E9%A9%B1%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%8F%8A%E6%97%B6%E5%8C%BA%E9%97%AE%E9%A2%98/</url>
