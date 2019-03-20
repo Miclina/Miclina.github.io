@@ -627,6 +627,28 @@ public class DruidConfig {
     </div>
 
     
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'b0c73f8606888435d38b',
+        clientSecret: '136bdcb9a81f3d901e5800dc9d37c4de4da70080',
+        repo: 'linhai-bai.github.io',
+        owner: 'linhai-bai',
+        admin: "linhai",
+        id: '2019-03-11T10-30-33',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
 
     
 
