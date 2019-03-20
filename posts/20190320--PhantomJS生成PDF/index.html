@@ -4,9 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL 6以后的驱动更新及时区问题, linhai">
-    <meta name="description" content="驱动更新mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”,否则版本不匹配便会报错
-时区设定使用新版驱动”">
+    <meta name="keywords" content="PhantomJS生成PDF, linhai">
+    <meta name="description" content="当需要将页面原样输出为图片或PDF时,可以使用PhantomJS进行抓取(官宣PhantomJS开发暂停,最新稳定版本phantomjs-2.1.1)
+下载文件官网 Download phantomjs-2.1.1-linux-x86_64">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>MySQL 6以后的驱动更新及时区问题 | 迷失の信徒</title>
+    <title>PhantomJS生成PDF | 迷失の信徒</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -204,13 +204,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        MySQL 6以后的驱动更新及时区问题
+                        PhantomJS生成PDF
                     </div>
                 </div>
             </div>
@@ -302,8 +302,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MySQL/" target="_blank">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/PDF/" target="_blank">
+                                <span class="chip bg-color">PDF</span>
+                            </a>
+                        
+                            <a href="/tags/PhantomJS/" target="_blank">
+                                <span class="chip bg-color">PhantomJS</span>
+                            </a>
+                        
+                            <a href="/tags/Linux/" target="_blank">
+                                <span class="chip bg-color">Linux</span>
                             </a>
                         
                     </div>
@@ -317,21 +325,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-03-12
+                    2019-03-20
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        105
+                        513
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        2 分
                     </div>
                     
                 
@@ -347,9 +355,92 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="驱动更新"><a href="#驱动更新" class="headerlink" title="驱动更新"></a>驱动更新</h3><p>mysql 5及之前的版本使用的是旧版驱动”com.mysql.jdbc.Driver”<br>mysql 6及之后的版本需要更新到新版驱动”com.mysql.cj.jdbc.Driver”,否则版本不匹配便会报错</p>
-<h3 id="时区设定"><a href="#时区设定" class="headerlink" title="时区设定"></a>时区设定</h3><p>使用新版驱动”com.mysql.cj.jdbc.Driver”,需要指定时区serverTimezone<br>(GMT%2B8、HongkongAsia/Shanghai或者Asia/Hongkong)</p>
-<pre><code>url: jdbc:mysql://localhost:3306/base?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;serverTimezone=GMT%2B8
+                <p>当需要将页面原样输出为图片或PDF时,可以使用PhantomJS进行抓取<br>(官宣PhantomJS开发暂停,最新稳定版本phantomjs-2.1.1)</p>
+<h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><p>官网 Download <a href="href=&quot;https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2&quot;">phantomjs-2.1.1-linux-x86_64.tar.bz2</a>(22.3 MB) and extract the content.<br>上传至Linux服务器</p>
+<h3 id="修改screenshot-js"><a href="#修改screenshot-js" class="headerlink" title="修改screenshot.js"></a>修改screenshot.js</h3><pre><code>&quot;use strict&quot;;
+var page = require(&apos;webpage&apos;).create();
+var system = require(&apos;system&apos;);
+
+var address = system.args[1];
+var output = system.args[2];
+
+page.viewportSize = {
+  width: 2400,
+  height: 20000
+};
+
+page.zoomFactor = 1;
+page.settings.loadImages = true;
+page.settings.resourceTimeout = 30000;
+page.settings.userAgent = &apos;Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.117 Safari/537.36&apos;;
+
+page.open(address, function(status) {
+
+    function checkReadyState() {
+        setTimeout(function () {
+            var readyState = page.evaluate(function () {
+                return document.readyState;
+            });
+            if (&quot;complete&quot; === readyState) {               
+                page.paperSize = { 
+                    format: &apos;A4&apos;,
+                    orientation: &apos;portrait&apos;, 
+                    margin: &apos;0.8cm&apos; 
+                };
+                page.render(output);
+                console.log(&quot;生成成功&quot;);
+                console.log(&quot;$&quot;+output+&quot;$&quot;);
+                phantom.exit(); 
+
+            } else {
+                checkReadyState();
+            }
+        },1000);
+    }
+    checkReadyState();
+});
+</code></pre><h3 id="修改文件权限"><a href="#修改文件权限" class="headerlink" title="修改文件权限"></a>修改文件权限</h3><pre><code>执行Linux指令
+    /** chmod能改变权限，-R是目录下所有文件，777就是高权限（读、写、执行） */
+    chmod -R 777 /usr/local/phantomjs-2.1.1-forpdf
+</code></pre><h3 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h3><pre><code>public String phantomjsPdf(String orderNo,HttpServletRequest request){
+    /*phantomjs在服务器的路径*/
+    String phantomjs = &quot;/usr/local/phantomjs-2.1.1-forpdf/bin/phantomjs&quot;;
+    /*截图js在服务器的路径*/
+    String screenshot = &quot;/usr/local/phantomjs-2.1.1-forpdf/bin/screenshot.js&quot;;
+    /*要生成图片的链接*/
+    String url = request.getScheme() + &quot;://&quot; + request.getServerName() + &quot;:&quot; + request.getServerPort()+&quot;/product/getPdfPage.do?orderNo=&quot;+orderNo;
+    /*生成的图片路径*/
+    String time = new Date().getTime()+&quot;&quot;;
+    String imgPath = request.getSession().getServletContext().getRealPath(&quot;/&quot;)+&quot;/images/upload/image/&quot;+&quot;product_agreement/&quot;+time+&quot;.pdf&quot;;
+    /*linux命令*/
+    String shell = phantomjs+&quot; &quot;+screenshot+&quot; &quot;+url+&quot; &quot;+imgPath;
+    MyUtil.shell(shell);
+    return &quot;/images/upload/image/product_agreement/&quot;+time+&quot;.pdf&quot;;
+}
+
+注:1. url中参数传多个时,shell中的url必须使用&apos;&apos;包裹,否则会造成参数丢失
+   2. url参数中包含中文时,需将参数进行转码,否则会发生乱码
+
+/*MyUtil.shell() 执行shell命令*/
+public static void shell(String cmd) {
+    String[] cmds = { &quot;/bin/sh&quot;, &quot;-c&quot;, cmd };
+    Process process;
+    try {
+        process = Runtime.getRuntime().exec(cmds);
+        StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), &quot;Error&quot;);
+        StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), &quot;Output&quot;);
+        errorGobbler.start();
+        outputGobbler.start();
+        try {
+            process.waitFor();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 </code></pre>
             </div>
             <hr>
@@ -497,7 +588,7 @@
                     </span>
                     <a href="http://linhai-bai.github.io" class="b-link-green">迷失の信徒</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/posts/20190312--MySQL-6以后的驱动更新及时区问题/" class="b-link-green">MySQL 6以后的驱动更新及时区问题</a>
+                    <a href="/posts/20190320--PhantomJS生成PDF/" class="b-link-green">PhantomJS生成PDF</a>
                 </p>
             </div>
         </div>
@@ -520,7 +611,59 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/posts/20190320--PhantomJS生成PDF/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="PhantomJS生成PDF">
+                        
+                        <span class="card-title">PhantomJS生成PDF</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">当需要将页面原样输出为图片或PDF时,可以使用PhantomJS进行抓取(官宣PhantomJS开发暂停,最新稳定版本phantomjs-2.1.1)
+下载文件官网 Download phantomjs-2.1.1-linux-x86_64</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            linhai
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/PDF/" target="_blank">
+                        <span class="chip bg-color">PDF</span>
+                    </a>
+                    
+                    <a href="/tags/PhantomJS/" target="_blank">
+                        <span class="chip bg-color">PhantomJS</span>
+                    </a>
+                    
+                    <a href="/tags/Linux/" target="_blank">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/posts/20190317--PDF添加图片印章-JAVA/">
                     <div class="card-image">
@@ -536,9 +679,9 @@
 //创建PdfDocument对象，加载PDF文档
 PdfDocument doc = new PdfDoc</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-user fa-fw"></i>
@@ -556,54 +699,6 @@ PdfDocument doc = new PdfDoc</div>
                     
                     <a href="/tags/PDF/" target="_blank">
                         <span class="chip bg-color">PDF</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/posts/20190311--Druid强大的监控和扩展功能/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Druid强大的监控和扩展功能">
-                        
-                        <span class="card-title">Druid强大的监控和扩展功能</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">Druid不仅是数据库连接池,还提供强大的监控和扩展功能.
-Druid监控配置
-SSM项目 ①添加Maven依赖&lt;dependency&gt;
-    &lt;groupId&gt;com.alibaba&lt;/groupId&gt</div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-03-11
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-user fa-fw"></i>
-                            linhai
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Druid/" target="_blank">
-                        <span class="chip bg-color">Druid</span>
-                    </a>
-                    
-                    <a href="/tags/数据库/" target="_blank">
-                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
